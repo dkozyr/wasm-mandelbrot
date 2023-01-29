@@ -29,11 +29,11 @@ void Mandelbrot::Fill(const Canvas& canvas) {
 }
 
 void Mandelbrot::ZoomIn() {
-    _zoom *= 1.05;
+    _zoom *= kZoomStep;
 }
 
 void Mandelbrot::ZoomOut() {
-    _zoom = std::max(0.5, _zoom / 1.05);
+    _zoom = std::max(0.5, _zoom / kZoomStep);
 }
 
 void Mandelbrot::MoveLeft() {
@@ -74,10 +74,9 @@ void Mandelbrot::SetRandomPosition(const Canvas& canvas) {
             std::unordered_set<int> used_colors;
 
             constexpr auto kRandomPoints = 120;
-            auto counter = 0;
             for(int i = 0; i < kRandomPoints; ++i) {
-                const double x = _x + RandomInt(-half_width, half_width) * delta;
-                const double y = _y + RandomInt(-half_height, half_height) * delta;
+                const auto x = _x + RandomInt(-half_width, half_width) * delta;
+                const auto y = _y + RandomInt(-half_height, half_height) * delta;
 
                 used_colors.insert(Evaluate(x, y, false));
             }
