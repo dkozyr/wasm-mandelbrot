@@ -8,6 +8,7 @@ public:
     static constexpr auto kMaxIterations = 80;
     static constexpr double kPixelSize = 0.007;
     static constexpr double kMaxZoom = 1e7;
+    static constexpr double kZoomStep = 1.05;
 
 public:
     Mandelbrot();

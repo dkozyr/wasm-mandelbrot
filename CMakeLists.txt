@@ -1,3 +1,5 @@
+set(WASI_VERSION_FULL "19.0")
+set(WASI_SDK_PATH $ENV{HOME}/deps/wasi-sdk-${WASI_VERSION_FULL})
 set(CMAKE_C_COMPILER "${WASI_SDK_PATH}/bin/clang")
 set(CMAKE_CXX_COMPILER "${WASI_SDK_PATH}/bin/clang++")
 
