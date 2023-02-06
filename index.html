@@ -54,8 +54,8 @@
                     <button type="button" class="btn btn-control btn-block btn-outline-primary bi bi-arrow-down disabled" id="move_down" onmousedown="OnBtnDown('down')" onmouseup="OnBtnUp()"></button>
                     <button type="button" class="btn btn-control btn-block btn-outline-primary bi bi-arrow-repeat disabled" id="reset" onclick="OnBtnReset()" />
                 </div>
-                <div>
-                    <canvas id="fractal" width="640" height="480" onmousemove="OnMouseMove(event)" onmouseout="OnMouseOut(event)" ></canvas>
+                <div class="w-100 p-3" style="height: 520px">
+                    <canvas id="fractal" width="640" height="480" style="width: 100%; height: 100%; max-width:640px; max-height:480px" onmousemove="OnMouseMove(event)" onmouseout="OnMouseOut(event)" />
                 </div>
                 <div id="state"></div>
             </div>
