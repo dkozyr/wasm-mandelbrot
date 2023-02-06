@@ -3,10 +3,11 @@ import wasiBindings from "@wasmer/wasi/lib/bindings/browser";
 import { WasmFs } from "@wasmer/wasmfs";
 
 let instance = null;
+const data_offset = 65536; // In place of "malloc"
 let data = null;
 
-let OnReady = function(real, image, zoom) {
-    const fractal = {'real':real, 'image':image, 'zoom':zoom};
+let OnReady = function(width, height, real, image, zoom) {
+    const fractal = {'width':width, 'height':height, 'real':real, 'image':image, 'zoom':zoom};
     window.OnReady(data, fractal);
 }
 
@@ -34,7 +35,6 @@ let OnInit = async function(width, height) {
     let seed1 = BigInt(new Date().getSeconds() * 3210987654321);
     instance.exports.RandSeed(seed0, seed1);
   
-    let data_offset = 65536; // In place of "malloc"
     data = new Uint8ClampedArray(memory.buffer, data_offset, 4 * width * height);
 
     instance.exports.Init(data_offset, width, height);

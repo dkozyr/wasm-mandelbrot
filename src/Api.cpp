@@ -4,7 +4,7 @@
 extern "C" {
 
 // js-function(s)
-void ready_callback(double, double, double);
+void ready_callback(int, int, double, double, double);
 
 }
 
@@ -25,61 +25,68 @@ API void Init(uint8_t* ptr, int width, int height) {
     mandelbrot.SetRandomPosition(canvas);
     mandelbrot.Fill(canvas);
 
-    ready_callback(mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
+    ready_callback(canvas.width, canvas.height, mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
 }
 
 API void ZoomIn() {
+    auto& canvas = g_data.canvas;
     auto& mandelbrot = g_data.mandelbrot;
     mandelbrot.ZoomIn();
     mandelbrot.Fill(g_data.canvas);
 
-    ready_callback(mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
+    ready_callback(canvas.width, canvas.height, mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
 }
 
 API void ZoomOut() {
+    auto& canvas = g_data.canvas;
     auto& mandelbrot = g_data.mandelbrot;
     mandelbrot.ZoomOut();
     mandelbrot.Fill(g_data.canvas);
 
-    ready_callback(mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
+    ready_callback(canvas.width, canvas.height, mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
 }
 
 API void MoveLeft() {
+    auto& canvas = g_data.canvas;
     auto& mandelbrot = g_data.mandelbrot;
     mandelbrot.MoveLeft();
     mandelbrot.Fill(g_data.canvas);
 
-    ready_callback(mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
+    ready_callback(canvas.width, canvas.height, mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
 }
 
 API void MoveRight() {
+    auto& canvas = g_data.canvas;
     auto& mandelbrot = g_data.mandelbrot;
     mandelbrot.MoveRight();
     mandelbrot.Fill(g_data.canvas);
 
-    ready_callback(mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
+    ready_callback(canvas.width, canvas.height, mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
 }
 
 API void MoveUp() {
+    auto& canvas = g_data.canvas;
     auto& mandelbrot = g_data.mandelbrot;
     mandelbrot.MoveUp();
     mandelbrot.Fill(g_data.canvas);
 
-    ready_callback(mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
+    ready_callback(canvas.width, canvas.height, mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
 }
 
 API void MoveDown() {
+    auto& canvas = g_data.canvas;
     auto& mandelbrot = g_data.mandelbrot;
     mandelbrot.MoveDown();
     mandelbrot.Fill(g_data.canvas);
 
-    ready_callback(mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
+    ready_callback(canvas.width, canvas.height, mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
 }
 
 API void SetRandomPosition() {
+    auto& canvas = g_data.canvas;
     auto& mandelbrot = g_data.mandelbrot;
     mandelbrot.SetRandomPosition(g_data.canvas);
     mandelbrot.Fill(g_data.canvas);
 
-    ready_callback(mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
+    ready_callback(canvas.width, canvas.height, mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
 }
