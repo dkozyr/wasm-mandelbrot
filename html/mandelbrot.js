@@ -2,12 +2,15 @@ import { WASI } from "@wasmer/wasi";
 import wasiBindings from "@wasmer/wasi/lib/bindings/browser";
 import { WasmFs } from "@wasmer/wasmfs";
 
+const memory = new WebAssembly.Memory({ initial: 32 });
+const kDataOffset = 65536;
+
 let instance = null;
-const data_offset = 65536; // In place of "malloc"
 let data = null;
 
 let OnReady = function(width, height, real, image, zoom) {
     const fractal = {'width':width, 'height':height, 'real':real, 'image':image, 'zoom':zoom};
+    data = new Uint8ClampedArray(memory.buffer, kDataOffset, 4 * width * height);
     window.OnReady(data, fractal);
 }
 
@@ -23,7 +26,6 @@ let OnInit = async function(width, height) {
     const module = await WebAssembly.compileStreaming(fetch('mandelbrot.wasm'));
     const { wasi_snapshot_preview1 } = wasi.getImports(module);
   
-    const memory = new WebAssembly.Memory({ initial: 32 });
     wasi.setMemory(memory);
     const env = { memory,
       'ready_callback': OnReady
@@ -34,12 +36,17 @@ let OnInit = async function(width, height) {
     let seed0 = BigInt(new Date().getMilliseconds() * 1234567890123);
     let seed1 = BigInt(new Date().getSeconds() * 3210987654321);
     instance.exports.RandSeed(seed0, seed1);
-  
-    data = new Uint8ClampedArray(memory.buffer, data_offset, 4 * width * height);
 
-    instance.exports.Init(data_offset, width, height);
+    instance.exports.Init(kDataOffset, width, height);
 }
 
+let OnResize = async function(width, height) {
+    if(instance != null) {
+        instance.exports.Resize(width, height);
+    }
+}
+
+let OnUpdate = async function() { if(instance != null) { instance.exports.Update(); } }
 let OnZoomIn = async function() { if(instance != null) { instance.exports.ZoomIn(); } }
 let OnZoomOut = async function() { if(instance != null) { instance.exports.ZoomOut(); } }
 let OnMoveLeft = async function() { if(instance != null) { instance.exports.MoveLeft(); } }
@@ -49,6 +56,8 @@ let OnMoveDown = async function() { if(instance != null) { instance.exports.Move
 let OnSetRandomPosition = async function() { if(instance != null) { instance.exports.SetRandomPosition(); } }
 
 window.Init = OnInit;
+window.Resize = OnResize;
+window.Update = OnUpdate;
 window.ZoomIn = OnZoomIn;
 window.ZoomOut = OnZoomOut;
 window.MoveLeft = OnMoveLeft;

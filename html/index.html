@@ -68,6 +68,7 @@
             let state = 'init';
             let direction = 'in';
             let mouse_position = null;
+            var do_size_check = false;
 
             const kFpsTrackerSize = 30;
             let fps_tracker = new Float32Array(kFpsTrackerSize);
@@ -162,7 +163,11 @@
             }
 
             function OnReady(data, fractal) {
-                ctx.putImageData(new ImageData(data, canvas.width, canvas.height), 0, 0);
+                if((canvas.clientWidth == fractal.width) && (canvas.clientHeight == fractal.height)) {
+                    ctx.putImageData(new ImageData(data, fractal.width, fractal.height), 0, 0);
+                } else {
+                    Update();
+                }
                 if(fps_str.length > 0) {
                     ctx.font = "20px";
                     ctx.fillStyle="#7F7F7F";
@@ -190,9 +195,28 @@
                 }
             }
 
+            var size_check_callback = function() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+                state = 'stop';
+                StopPlaying();
+                Resize(canvas.clientWidth, canvas.clientHeight);
+            };
+            window.addEventListener("resize", function() {
+                if(do_size_check) {
+                    size_check_callback();
+                    do_size_check = false;
+                    setTimeout(function() {
+                        do_size_check = true;
+                        size_check_callback();
+                    }, 100)
+                }
+            });
+
             function IntervalCheck() {
                 if(typeof Init === "function") {
                     Init(canvas.width, canvas.height);
+                    do_size_check = true;
                 } else {
                     setTimeout(IntervalCheck, 100);
                 }

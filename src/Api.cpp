@@ -28,6 +28,22 @@ API void Init(uint8_t* ptr, int width, int height) {
     ready_callback(canvas.width, canvas.height, mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
 }
 
+API void Resize(int width, int height) {
+    auto& canvas = g_data.canvas;
+    canvas.width = width;
+    canvas.height = height;
+
+    auto& mandelbrot = g_data.mandelbrot;
+    mandelbrot.Fill(canvas);
+
+    ready_callback(canvas.width, canvas.height, mandelbrot.GetReal(), mandelbrot.GetImage(), mandelbrot.GetZoom());
+}
+
+API void Update() {
+    auto& canvas = g_data.canvas;
+    Resize(canvas.width, canvas.height);
+}
+
 API void ZoomIn() {
     auto& canvas = g_data.canvas;
     auto& mandelbrot = g_data.mandelbrot;
