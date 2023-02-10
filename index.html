@@ -162,11 +162,19 @@
                 }
             }
 
+            var OnResize = function() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+                state = 'stop';
+                StopPlaying();
+                Resize(canvas.clientWidth, canvas.clientHeight);
+            };
+
             function OnReady(data, fractal) {
                 if((canvas.clientWidth == fractal.width) && (canvas.clientHeight == fractal.height)) {
                     ctx.putImageData(new ImageData(data, fractal.width, fractal.height), 0, 0);
                 } else {
-                    Update();
+                    OnResize();
                 }
                 if(fps_str.length > 0) {
                     ctx.font = "20px";
@@ -195,20 +203,13 @@
                 }
             }
 
-            var size_check_callback = function() {
-                canvas.width = canvas.clientWidth;
-                canvas.height = canvas.clientHeight;
-                state = 'stop';
-                StopPlaying();
-                Resize(canvas.clientWidth, canvas.clientHeight);
-            };
             window.addEventListener("resize", function() {
                 if(do_size_check) {
-                    size_check_callback();
+                    OnResize();
                     do_size_check = false;
                     setTimeout(function() {
                         do_size_check = true;
-                        size_check_callback();
+                        OnResize();
                     }, 100)
                 }
             });
