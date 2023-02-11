@@ -68,7 +68,7 @@
             let state = 'init';
             let direction = 'in';
             let mouse_position = null;
-            var do_size_check = true;
+            var do_size_check = false;
 
             const kFpsTrackerSize = 30;
             let fps_tracker = new Float32Array(kFpsTrackerSize);
@@ -196,12 +196,7 @@
                     ctx.fillText(fps_str, 10, 480 - 10);
                 }
 
-                if(state == 'init') {
-                    ['#play', '#zoom_in', '#zoom_out', '#move_left', '#move_right', '#move_up', '#move_down', '#reset'].forEach(element => {
-                        $(element).removeClass("disabled");
-                        $(element).prop("disabled", false);
-                    });
-                } else if(state == 'play') {
+                if(state == 'play') {
                     window.requestAnimationFrame(PlayFrame);
                 }
                 fractal_state = fractal;
@@ -224,6 +219,12 @@
             function IntervalCheck() {
                 if(typeof Init === "function") {
                     Init(canvas.width, canvas.height);
+                    if(state == 'init') {
+                        ['#play', '#zoom_in', '#zoom_out', '#move_left', '#move_right', '#move_up', '#move_down', '#reset'].forEach(element => {
+                            $(element).removeClass("disabled");
+                            $(element).prop("disabled", false);
+                        });
+                    }
                     do_size_check = true;
                 } else {
                     setTimeout(IntervalCheck, 100);
