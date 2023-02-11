@@ -198,7 +198,8 @@
 
                 if(state == 'init') {
                     ['#play', '#zoom_in', '#zoom_out', '#move_left', '#move_right', '#move_up', '#move_down', '#reset'].forEach(element => {
-                        $(element).removeClass('disabled');
+                        $(element).removeClass("disabled");
+                        $(element).prop("disabled", false);
                     });
                 } else if(state == 'play') {
                     window.requestAnimationFrame(PlayFrame);
