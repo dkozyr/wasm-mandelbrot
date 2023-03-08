@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Mandelbrot | WASM</title>
+        <title>Mandelbrot Fractal | WASM</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -40,7 +40,9 @@
     <body>
 
         <div class="header px-3 py-3 mx-auto text-center">
-            <h1 class="display-4">WASM Mandelbrot</h1>
+            <h1 class="display-4">Mandelbrot Fractal</h1>
+            <p>Welcome to our website where you can explore the fascinating world of the Mandelbrot fractal!</p>
+            <p>The Mandelbrot fractal is a stunning example of the infinite complexity and beauty of mathematics. Each fractal image is unique, with intricate patterns and shapes that reveal themselves as you zoom in closer and closer.</p>
         </div>
         <div class="container">
             <div class="card-deck mb-3 text-center">
@@ -58,6 +60,11 @@
                     <canvas id="fractal" width="640" height="480" style="width: 100%; height: 100%; max-width:640px; max-height:480px" onmousemove="OnMouseMove(event)" onmouseout="OnMouseOut(event)" />
                 </div>
                 <div id="state"></div>
+            </div>
+            <div class="card-deck text-left">
+                <p>In order to ensure fast and efficient computation, we have implemented WebAssembly (WASM) technology on our website. This allows for high-performance computation of the Mandelbrot fractals, ensuring that the images are generated quickly and accurately.</p>
+                <p>WebAssembly is a cutting-edge technology that enables high-performance computation in web browsers. By compiling code to run in the browser&apos;s native machine code, WebAssembly allows us to take full advantage of the user&apos;s device, without the need for plugins or additional software.</p>
+                <p><a href="https://github.com/dkozyr/wasm-mandelbrot">Source code on GitHub</a></p>
             </div>
         </div>
 
