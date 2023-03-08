@@ -11,6 +11,15 @@ set(WASI_VERSION_FULL "19.0")
 set(WASI_SDK_PATH $ENV{HOME}/deps/wasi-sdk-${WASI_VERSION_FULL})
 ```
 
+## How to build
+
+```
+mkdir build
+cd build
+cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+ninja
+```
+
 ## Example
 
 [Mandelbrot Fractal WASM](https://dkozyr.github.io/wasm-mandelbrot/)
